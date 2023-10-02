@@ -1,6 +1,6 @@
 
 
-const AddMovie = () => {
+const AddMoviePage = () => {
     return (
         <main>
             <div>AddMovie page</div>
@@ -8,4 +8,4 @@ const AddMovie = () => {
     )
 }
 
-export default AddMovie
+export default AddMoviePage
