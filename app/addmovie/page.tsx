@@ -1,9 +1,10 @@
+import { AddMovieForm } from "@/components/addMovieForm/AddMovieForm"
 
 
 const AddMoviePage = () => {
     return (
         <main>
-            <div>AddMovie page</div>
+            <AddMovieForm />
         </main>
     )
 }

@@ -1,4 +1,4 @@
-.add-movie-form {
+.form {
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -6,7 +6,7 @@
 
 }
 
-.img-selector-wrapper {
+.imageSelectionContainer {
     grid-area: 1 / 1 / 2 / 2;
     display: flex;
     justify-content: space-between;
@@ -15,7 +15,7 @@
 
 }
 
-.movie-img-selector-container {
+.imageSelectorContainer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,7 +31,7 @@
     -o-border-radius: 8px;
 }
 
-.img-selected-preview-container {
+.imagePreviewContainer {
     width: 100px;
     height: 160px;
     display: flex;
@@ -46,7 +46,7 @@
     -o-border-radius: 8px;
 }
 
-.img-selected-preview {
+.selectedImage {
     width: 100px;
     height: 160px;
     object-fit: cover;
@@ -57,30 +57,20 @@
     -o-border-radius: 8px;
 }
 
-.movie-input-container {
+.inputContainer {
     display: grid;
     grid-template-rows: 3fr 1fr;
     justify-content: center;
 }
 
-
-.title-genres-privacity-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-}
-
-.add-movie-input::placeholder {
+.input::placeholder {
     color: #FFFFFF;
 }
 
-.movie-title-input,
-.movie-year-input,
-.movie-score-input,
-.movie-genre-select {
+.titleInput,
+.yearInput,
+.scoreInput,
+.genreSelect {
     width: 305px;
     height: 55px;
     padding-left: 15px;
@@ -96,12 +86,12 @@
     -o-border-radius: 15px;
 }
 
-.movie-genre-select {
+.genreSelect {
     width: 324px;
 }
 
 
-.privacity-selection-container {
+.privacityContainer {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -109,7 +99,7 @@
     color: #FFFFFF;
 }
 
-.privacity-btn-container {
+.privacityButtonContainer {
     width: 109px;
     display: flex;
     justify-content: space-between;
@@ -117,13 +107,17 @@
 
 }
 
-.hidden-input {
+.privacityText {
+    margin: 5px;
+}
+
+.hidden {
     height: 0;
     width: 0;
     opacity: 0;
 }
 
-.add-movie-submit-btn {
+.submitButton {
     border-style: none;
     background-color: #AC090F;
     color: #000;
@@ -138,7 +132,7 @@
     -o-border-radius: 15px;
 }
 
-.movie-form-error {
+.error {
     margin: 0;
     color: red;
     font-family: 'Courier New', Courier, monospace;
@@ -146,17 +140,16 @@
     font-weight: bold;
 }
 
-.movie-form-error::before {
+.error::before {
     display: inline;
     content: "⚠ ";
 }
 
-.toggle-select-paragraph {
-    margin: 5px;
-}
-
-.white-space-form {
-    height: 10vh;
+.whiteSpace {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
 }
 
 
@@ -231,10 +224,4 @@ input:checked+.slider:before {
 
 .slider:before {
     border-radius: 50%;
-}
-
-
-.white-space {
-
-    height: 160px;
 }

@@ -1,27 +1,12 @@
+"use client";
+
+import styles from "./addMovieForm.module.css";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import PreviewBg from "../../assets/images/img-preview-bg.jpg";
-import { useAuth0 } from "@auth0/auth0-react";
-import "./addMovieForm.css";
+import Image from "next/image";
+import PreviewBg from "@/public/assets/images/img-preview-bg.jpg";
 import toast, { Toaster } from "react-hot-toast";
-import { useUserContext } from "../../utils/hooks/useUserContext";
-import { createNewMovie } from "../../api/fetchApi";
-
-
-
-// enum MoviesGenres {
-
-//     HORROR = "horror",
-//     SCIFI = "Sci-fi",
-//     FANTASY = "fantasy",
-//     ANIMATION = "animation",
-//     THRILLER = "thriller",
-//     ACTION = "action",
-//     COMEDY = "comedy",
-//     MISTERY = "mistery",
-//     ADVENTURE = "adventure",
-//     CRIME = "crime"
-// }
+// import { createNewMovie } from "../../api/fetchApi";
 
 
 export const AddMovieForm = () => {
@@ -31,8 +16,6 @@ export const AddMovieForm = () => {
 
     const [uploadingImageUrl, setUploadingImageUrl] = useState<any | null>(null);
     const [seenState, setSeenState] = useState(false);
-    const { getAccessTokenSilently } = useAuth0();
-    const { currentUser } = useUserContext();
 
 
 
@@ -49,10 +32,10 @@ export const AddMovieForm = () => {
 
     const submitForm = async (data: any) => {
 
-        const userId = currentUser?.id;
+        // const userId = currentUser?.id;
         toast.success('Movie is being uploaded...')
 
-        if (userId) await createNewMovie(userId, data, getAccessTokenSilently);
+        // if (userId) await createNewMovie(userId, data, getAccessTokenSilently);
 
         reset();
         toast.success('Movie uploaded successfully...')
@@ -85,16 +68,16 @@ export const AddMovieForm = () => {
 
 
         <>
-            <form className="add-movie-form" onSubmit={handleSubmit(submitForm)}>
+            <form className={styles.form} onSubmit={handleSubmit(submitForm)}>
                 <Toaster
                     position="top-center"
                     reverseOrder={false}
                 />
 
-                <div className="img-selector-wrapper">
-                    <div className="movie-img-selector-container">
-                        <label htmlFor="movie-img-input" className="movie-img-label">Select image</label>
-                        <input id="movie-img-input" className="movie-img-input add-movie-input hidden-input" type="file" accept="image/jpeg, image/jpg, image/webp" placeholder="Select movie cover..."
+                <div className={styles.imageSelectionContainer}>
+                    <div className={styles.imageSelectorContainer}>
+                        <label htmlFor="movie-img-input">Select image</label>
+                        <input id="movie-img-input" className={`${styles.input} ${styles.hidden}`} type="file" accept="image/jpeg, image/jpg, image/webp" placeholder="Select movie cover..."
                             {...register("image", {
                                 required: {
                                     value: true,
@@ -102,15 +85,15 @@ export const AddMovieForm = () => {
                                 }
                             })}
                         />
-                        {errors.image && <p className="movie-form-error">{errors.image.message}</p>}
+                        {errors.image && <p className={styles.error}>{errors.image.message}</p>}
                     </div>
-                    <div className="img-selected-preview-container" style={uploadingImageUrl ? { border: "none" } : {}}>
-                        {uploadingImageUrl ? <img className="img-selected-preview" src={uploadingImageUrl} alt="your movie cover" /> : <img className="img-selected-preview" src={PreviewBg} alt="upload your image" />}
+                    <div className={styles.ImagePreviewContainer} style={uploadingImageUrl ? { border: "none" } : {}}>
+                        {uploadingImageUrl ? <Image className={styles.selectedImage} src={uploadingImageUrl} alt="your movie cover" /> : <Image className={styles.selectedImage} src={PreviewBg} alt="upload your image" />}
                     </div>
                 </div>
 
-                <div className="movie-input-container">
-                    <input className="movie-title-input add-movie-input" type="text" placeholder="Movie title..."
+                <div className={styles.inputContainer}>
+                    <input className={`${styles.titleInput} ${styles.input}`} type="text" placeholder="Movie title..."
                         {...register("title", {
                             required: {
                                 value: true,
@@ -126,14 +109,14 @@ export const AddMovieForm = () => {
                             }
                         })}
                     />
-                    {errors.title && <p className="movie-form-error error-title">{errors.title.message}</p>}
+                    {errors.title && <p className={styles.error}>{errors.title.message}</p>}
                 </div>
 
 
 
 
-                <div className="movie-input-container">
-                    <input className="movie-year-input add-movie-input" type="number" placeholder="Year of publication..."
+                <div className={styles.inputContainer}>
+                    <input className={`${styles.yearInput} ${styles.input}`} type="number" placeholder="Year of publication..."
                         {...register("year", {
                             required: {
                                 value: true,
@@ -149,13 +132,13 @@ export const AddMovieForm = () => {
                             }
                         })}
                     />
-                    {errors.year && <p className="movie-form-error error-title">{errors.year.message}</p>}
+                    {errors.year && <p className={styles.error}>{errors.year.message}</p>}
                 </div>
 
 
 
-                <div className="movie-input-container">
-                    <input className="movie-score-input add-movie-input" type="number" step="0.1" placeholder="Movie score..."
+                <div className={styles.inputContainer}>
+                    <input className={`${styles.scoreInput} ${styles.input}`} type="number" step="0.1" placeholder="Movie score..."
                         {...register("score", {
                             required: {
                                 value: true,
@@ -171,7 +154,7 @@ export const AddMovieForm = () => {
                             }
                         })}
                     />
-                    {errors.title && <p className="movie-form-error error-title">{errors.title.message}</p>}
+                    {errors.title && <p className={styles.error}>{errors.title.message}</p>}
                 </div>
 
 
@@ -179,8 +162,8 @@ export const AddMovieForm = () => {
 
 
 
-                <div className="movie-input-container">
-                    <select className="movie-genre-select add-movie-input" id="genres"
+                <div className={styles.inputContainer}>
+                    <select className={`${styles.genreSelect} ${styles.input}`} id="genres"
                         defaultValue=""
                         {...register("genre", {
                             required: {
@@ -201,21 +184,21 @@ export const AddMovieForm = () => {
                         <option value="adventure">Adventure</option>
                         <option value="crime">Crime</option>
                     </select>
-                    {errors.genre && <p className="movie-form-error select-error">{errors.genre.message}</p>}
+                    {errors.genre && <p className={styles.error}>{errors.genre.message}</p>}
                 </div>
 
-                <div className="privacity-selection-container">
-                    <p className="toggle-select-paragraph">Seen/Unseen</p>
-                    <span className="privacity-btn-container">
-                        <p className="toggle-select-paragraph">{seenState ? "Seen" : "Unseen"}</p>
-                        <label className="switch">
+                <div className={styles.privacityContainer}>
+                    <p className={styles.privacityText}>Seen/Unseen</p>
+                    <span className={styles.privacityButtonContainer}>
+                        <p className={styles.privacityText}>{seenState ? "Seen" : "Unseen"}</p>
+                        <label className={styles.switch}>
                             <input type="checkbox" id="movie-privacity-check" onChange={handleSeenState} />
-                            <span className="slider"></span>
+                            <span className={styles.slider}></span>
                         </label>
                     </span>
                 </div>
 
-                <button className="add-movie-submit-btn" type="submit">Upload</button>
+                <button className={styles.submitButton} type="submit">Upload</button>
             </form>
             <div className="white-space-form">
 
