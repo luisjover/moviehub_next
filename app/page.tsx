@@ -1,13 +1,14 @@
 import Image from 'next/image';
 import styles from './page.module.css';
 import { getSession } from '@auth0/nextjs-auth0';
+import MoviesList from '@/components/movieslist/movielist/MovieList';
 
 const Home = async () => {
   const session = await getSession();
+  console.log(session)
   return (
     <main>
-      <h1>{`Mr. ${session?.user.family_name}`}</h1>
-      <a href="/api/auth/logout">Logout</a>
+      <MoviesList userEmail={session?.user.email} />
     </main>
   )
 }

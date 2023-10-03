@@ -1,0 +1,57 @@
+.container {
+    height: 150px;
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(105, 105, 105, 0.4);
+    box-shadow: 5px -5px 12px 0px rgba(255, 255, 255, 0.05) inset, -5px 5px 12px 0px rgba(255, 255, 255, 0.05) inset, 4px 7px 15px 0px rgba(0, 0, 0, 0.08), -1px 0px 2px 0px rgba(201, 201, 201, 0.10) inset;
+    backdrop-filter: blur(6px);
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+/* .cardImage {
+    height: 115px;
+    width: 75px;
+} */
+
+.infoContainer {
+    height: 115px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.info {
+    margin: 0;
+    color: #FFFCFC;
+}
+
+.editContainer {
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+}
+
+.editIcon {
+    height: 20px;
+    width: 20px;
+    color: #FFFCFC;
+}
+
+/* .modal-title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-title {
+    margin-top: 10px;
+} */

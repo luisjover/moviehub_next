@@ -14,12 +14,14 @@
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-icons": "^4.11.0"
+    "react-icons": "^4.11.0",
+    "react-modal": "^3.16.1"
   },
   "devDependencies": {
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "@types/react-modal": "^3.16.1",
     "typescript": "latest"
   }
 }

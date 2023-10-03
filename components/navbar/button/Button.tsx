@@ -1,30 +1,53 @@
+"use client";
+
 import styles from "./button.module.css";
+import Link from "next/link";
 import { BiHomeAlt2, BiSearch, BiSolidHeart } from 'react-icons/bi';
 import { MdLibraryAdd } from 'react-icons/md';
+import { GiMonsterGrasp, Gi3DGlasses } from "react-icons/gi";
+import { usePathname } from "next/navigation";
 // import { Icon } from '@iconify/react';
 
-type IconType = {
-    id: string,
-    path: string
-}
 
 type Props = {
-    icon: IconType,
+    path: string,
     index: number
 }
 
-const Button = ({ icon, index }: Props) => {
+const Button = ({ path, index }: Props) => {
+    const pathname = usePathname();
+
     return (
         <div className={styles.container}>
-            <input id={icon.id} name="icon-navbar-bottom" type="radio" className={styles.input} />
-            <label htmlFor={icon.id} className={styles.label}>
-                {index === 0 && <BiHomeAlt2 className={styles.icon} />}
-                {index === 1 && <BiSearch className={styles.icon} />}
-                {index === 2 && <MdLibraryAdd className={styles.icon} />}
-                {index === 3 && <BiSolidHeart className={styles.icon} />}
-                {index === 4 && <BiSolidHeart className={styles.icon} />}
 
-            </label>
+
+            {index === 0 &&
+                <Link href={path}>
+                    <BiHomeAlt2 className={`${styles.icon} ${pathname === path ? styles.checked : ""}`} />
+                </Link>
+            }
+            {index === 1 &&
+                <Link href={path}>
+                    <Gi3DGlasses className={`${styles.icon} ${pathname === path ? styles.checked : ""}`} />
+                </Link>
+            }
+            {index === 2 &&
+                <Link href={path}>
+                    <MdLibraryAdd className={`${styles.icon} ${pathname === path ? styles.checked : ""}`} />
+                </Link>
+            }
+            {index === 3 &&
+                <Link href={path}>
+                    <BiSolidHeart className={`${styles.icon} ${pathname === path ? styles.checked : ""}`} />
+                </Link>
+            }
+            {index === 4 &&
+                <Link href={path}>
+                    <GiMonsterGrasp className={`${styles.icon} ${pathname === path ? styles.checked : ""}`} />
+                </Link>
+            }
+
+
         </div>
     )
 }

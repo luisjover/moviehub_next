@@ -4,16 +4,12 @@
     align-items: center;
 }
 
-.input {
-    display: none;
-}
-
-.input:checked+.label>.icon {
-    color: #AC090F;
-}
-
 .icon {
     width: 2.87rem;
     height: 2.87rem;
     color: #f1f1f1;
+}
+
+.checked {
+    color: #AC090F;
 }

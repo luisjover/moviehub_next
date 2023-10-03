@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    height: calc(100vh - 200px);
+    width: 100vw;
+    overflow: scroll;
+    padding-top: 20px;
+}
+
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+.whitespace {
+    height: 98px;
+    width: 100vw;
+}
