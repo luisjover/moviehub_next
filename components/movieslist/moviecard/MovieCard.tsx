@@ -6,6 +6,7 @@ import { FC, useState } from "react";
 import { Icon } from '@iconify/react';
 import Modal from 'react-modal';
 import { Movie } from "@/types/movies";
+import UpdateMovieForm from "@/components/updateMovieForm/UpdateMovieForm";
 // import { UpdateMovieForm } from "../../updateMovieForm/UpdateMovieForm";
 
 
@@ -65,10 +66,10 @@ const MovieCard = ({ movie }: MovieType) => {
                 <div className="modal-title-container">
                     <h2 className="modal-title">Update Movie</h2>
                 </div>
-                {/* <UpdateMovieForm
-                movieId={movie.id}
-                closeModal={closeModal}
-            /> */}
+                <UpdateMovieForm
+                    movieId={movie.id}
+                    closeModal={closeModal}
+                />
             </Modal>
         </div>
 
