@@ -5,7 +5,7 @@ import MoviesList from '@/components/movieslist/movielist/MovieList';
 
 const Home = async () => {
   const session = await getSession();
-  console.log(session)
+
   return (
     <main>
       <MoviesList userEmail={session?.user.email} />

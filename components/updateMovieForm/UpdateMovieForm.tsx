@@ -218,3 +218,23 @@ const UpdateMovieForm = ({ ...props }) => {
 }
 
 export default UpdateMovieForm;
+
+
+
+
+
+
+
+
+
+const handleDeleteMovie = () => {
+    // deleteMovie(props.movieId, getAccessTokenSilently)
+    props.closeModal();
+    // location.reload();
+
+}
+
+<div className={styles.whiteSpace}>
+    <Icon className={styles.deleteIcon} icon="icomoon-free:bin" onClick={handleDeleteMovie} />
+
+</div>

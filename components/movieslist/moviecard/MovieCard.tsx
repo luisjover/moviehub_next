@@ -31,6 +31,7 @@ const MovieCard = ({ movie }: MovieType) => {
 
     const [modalIsOpen, setIsOpen] = useState(false);
 
+
     function openModal() {
         setIsOpen(true);
     }
@@ -38,6 +39,7 @@ const MovieCard = ({ movie }: MovieType) => {
     function closeModal() {
         setIsOpen(false);
     }
+
 
     return (
 

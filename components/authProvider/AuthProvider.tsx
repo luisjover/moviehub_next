@@ -1,5 +1,5 @@
 
-import { getSession } from "@auth0/nextjs-auth0"
+import { getSession, getAccessToken } from "@auth0/nextjs-auth0"
 import Login from "../login/Login";
 
 type Props = {
@@ -8,7 +8,8 @@ type Props = {
 
 const AuthProvider = async ({ children }: Props) => {
     const session = await getSession();
-    if (!session) {
+    const token = await getAccessToken();
+    if (!session || !token) {
         return <Login />
     }
     return (
