@@ -10,7 +10,7 @@ const Header = (props: Props) => {
     return (
         <div className={styles.container}>
             <Image className={styles.logo} src={Logo} alt="application logo" priority={true} />
-            <SettingsButton />
+
         </div>
     )
 }

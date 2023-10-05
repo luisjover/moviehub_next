@@ -1,10 +1,13 @@
 "use client";
 
 import styles from "./movieForm.module.css";
-import { useState, useEffect, FC } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import Image from 'next/image';
 import toast, { Toaster } from "react-hot-toast";
+import { UserType } from "@/types/users";
+import { createNewMovie } from "@/actions/movies.action";
+import { useRouter } from "next/navigation";
 
 type MovieFormData = {
     image: File | null;
@@ -14,7 +17,14 @@ type MovieFormData = {
     genre: string;
 };
 
-const MovieForm: FC = () => {
+type Props = {
+    user: UserType
+}
+
+
+const MovieForm = ({ user }: Props) => {
+
+    const router = useRouter();
 
     const defaultValues: MovieFormData = {
         image: null,
@@ -40,21 +50,26 @@ const MovieForm: FC = () => {
     const submitForm: SubmitHandler<MovieFormData> = async (data) => {
         let loadingToast: string | null = null;
         try {
-            // Muestra una notificación de carga cuando se inicia la carga de la película
+
+
             loadingToast = toast.loading('Movie is being uploaded...');
 
-            // Simula una carga para demostrar la notificación
-            await new Promise((resolve) => setTimeout(resolve, 2000));
+            if (data.image) {
+                const formData = new FormData();
+                formData.append("title", data.title);
+                formData.append("year", data.year);
+                formData.append("score", data.score);
+                formData.append("genre", data.genre);
+                formData.append("image", data.image);
 
-            // Aquí puedes hacer la solicitud real para subir la película
-            // Reemplaza el código simulado con tu lógica de envío real
+                const newMovie = await createNewMovie(user.id, formData)
+            }
 
-            // Muestra una notificación de éxito cuando la película se ha subido correctamente
             toast.success('Movie uploaded successfully!!', { id: loadingToast });
+            router.refresh();
             reset();
         } catch (error) {
-            // Maneja los errores aquí y muestra una notificación de error si es necesario
-            // error es la excepción capturada durante el proceso de envío
+            console.error(error)
             if (loadingToast) {
                 toast.error('Error uploading movie', { id: loadingToast });
             }
@@ -82,6 +97,9 @@ const MovieForm: FC = () => {
                     <Controller
                         name="image"
                         control={control}
+                        rules={{
+                            required: 'Image is required'
+                        }}
                         render={({ field }) => (
                             <>
                                 <div className={styles.imageSelectorContainer}>
@@ -90,7 +108,7 @@ const MovieForm: FC = () => {
                                         id="image-input"
                                         type="file"
                                         className={`${styles.input} ${styles.hidden}`}
-                                        accept="image/*"
+                                        accept="image/jpeg, image/jpg image/webp"
                                         onChange={(e) => {
                                             const selectedFile = e.target.files?.[0];
                                             if (selectedFile) {
@@ -107,6 +125,7 @@ const MovieForm: FC = () => {
                                             alt="Preview"
                                             width={100}
                                             height={160}
+                                            priority={true}
                                         />
                                     ) : (
                                         <Image
@@ -122,7 +141,9 @@ const MovieForm: FC = () => {
                             </>
                         )}
                     />
+
                 </div>
+                {errors.image && <p className={styles.error}>{errors.image.message}</p>}
 
 
                 <div className={styles.inputContainer}>
@@ -130,7 +151,17 @@ const MovieForm: FC = () => {
                     <Controller
                         name="title"
                         control={control}
-                        rules={{ required: 'Title is required' }}
+                        rules={{
+                            required: 'Title is required',
+                            minLength: {
+                                value: 4,
+                                message: "Use 4 or more characters"
+                            },
+                            maxLength: {
+                                value: 20,
+                                message: "Use less than 20 characters"
+                            }
+                        }}
                         render={({ field }) => <input className={`${styles.titleInput} ${styles.input}`} {...field} type="text" placeholder="Movie title..." />}
                     />
                     {errors.title && <p className={styles.error}>{errors.title.message}</p>}
@@ -141,8 +172,18 @@ const MovieForm: FC = () => {
                     <Controller
                         name="year"
                         control={control}
-                        rules={{ required: 'Year is required' }}
-                        render={({ field }) => <input className={`${styles.yearInput} ${styles.input}`} {...field} type="text" placeholder="Year of publication..." />}
+                        rules={{
+                            required: 'Year is required',
+                            min: {
+                                value: 1895,
+                                message: "Use a valid year (after 1895)"
+                            },
+                            max: {
+                                value: 2023,
+                                message: "Use a valid year(before 2023)"
+                            }
+                        }}
+                        render={({ field }) => <input className={`${styles.yearInput} ${styles.input}`} {...field} type="number" placeholder="Year of publication..." />}
                     />
                     {errors.year && <p className={styles.error}>{errors.year.message}</p>}
                 </div>
@@ -152,8 +193,18 @@ const MovieForm: FC = () => {
                     <Controller
                         name="score"
                         control={control}
-                        rules={{ required: 'Score is required' }}
-                        render={({ field }) => <input className={`${styles.scoreInput} ${styles.input}`} {...field} type="text" placeholder="Movie score..." />}
+                        rules={{
+                            required: 'Score is required',
+                            min: {
+                                value: 0,
+                                message: "Use a value between 1 and 10"
+                            },
+                            max: {
+                                value: 10,
+                                message: "Use a value between 1 and 10"
+                            }
+                        }}
+                        render={({ field }) => <input className={`${styles.scoreInput} ${styles.input}`} {...field} type="number" step="0.1" placeholder="Movie score..." />}
                     />
                     {errors.score && <p className={styles.error}>{errors.score.message}</p>}
                 </div>
@@ -163,11 +214,12 @@ const MovieForm: FC = () => {
                     <Controller
                         name="genre"
                         control={control}
+                        rules={{ required: "Select a genre" }}
                         render={({ field }) => (
                             <select className={`${styles.genreSelect} ${styles.input}`} {...field}>
                                 <option value="" disabled hidden>Select a genre for your movie</option>
                                 <option value="horror">Horror</option>
-                                <option value="sci-fi">Sci-Fi</option>
+                                <option value="scifi">Sci-Fi</option>
                                 <option value="fantasy">Fantasy</option>
                                 <option value="animation">Animation</option>
                                 <option value="thriller">Thriller</option>
@@ -179,6 +231,7 @@ const MovieForm: FC = () => {
                             </select>
                         )}
                     />
+                    {errors.genre && <p className={styles.error}>{errors.genre.message}</p>}
                 </div>
 
 

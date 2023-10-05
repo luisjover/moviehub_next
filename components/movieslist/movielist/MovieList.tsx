@@ -10,14 +10,13 @@ type Props = {
 const MoviesList = async ({ userEmail }: Props) => {
 
     const user = await getUserByEmail(userEmail);
-    console.log(user);
 
     return (
 
         <div className={styles.container}>
             {user?.movies && user?.movies.map(movie => (
                 <MovieCard
-                    key={movie.id}
+
                     movie={movie}
                 />
             ))}

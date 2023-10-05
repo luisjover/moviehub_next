@@ -25,5 +25,10 @@
     "@types/react-dom": "latest",
     "@types/react-modal": "^3.16.1",
     "typescript": "latest"
+  },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
   }
 }

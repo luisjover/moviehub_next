@@ -1,11 +1,11 @@
 .container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 35px 25px 15px 110px;
+    padding: 25px 0 15px 0;
 }
 
 .logo {
-    height: 56px;
-    width: 160px;
+    height: auto;
+    width: 180px;
 }

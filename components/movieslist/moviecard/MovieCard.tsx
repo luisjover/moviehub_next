@@ -2,8 +2,11 @@
 
 import styles from "./movieCard.module.css";
 import Image from 'next/image';
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import Link from 'next/link';
 import { Icon } from '@iconify/react';
+import { GiCrossMark } from "react-icons/gi";
+import { LuExpand } from "react-icons/lu";
 import Modal from 'react-modal';
 import { Movie } from "@/types/movies";
 import UpdateMovieForm from "@/components/updateMovieForm/UpdateMovieForm";
@@ -36,6 +39,7 @@ function setAppElement() {
 
 const MovieCard = ({ movie }: MovieType) => {
 
+
     const [modalIsOpen, setIsOpen] = useState(false);
 
 
@@ -48,7 +52,6 @@ const MovieCard = ({ movie }: MovieType) => {
     }
 
     useEffect(() => {
-        // Configura el elemento raíz la primera vez que se monta el componente
         setAppElement();
     }, []);
 
@@ -56,18 +59,22 @@ const MovieCard = ({ movie }: MovieType) => {
     return (
 
         <div className={styles.container}>
-            <Image className={styles.cardImage} src={movie.cover_img} alt={`Cover Image of ${movie.title}`} width={75} height={115} />
+            <Image className={styles.cardImage} src={movie.cover_img} alt={`Cover Image of ${movie.title}`} width={75} height={115} priority={true} />
 
             <div className={styles.infoContainer}>
                 <p className={styles.info}>Title: {movie.title}</p>
 
                 <p className={styles.info}>Year: {movie.year}</p>
 
-                <p className={styles.info}>Genre: {movie.genres}</p>
+                <p className={styles.info}>Genre: {movie.genresName}</p>
 
                 <p className={styles.info}>Score: {movie.score}</p>
             </div>
+
             <div className={styles.editContainer}>
+                <Link href={`/${movie.id}`}>
+                    <LuExpand className={styles.editIcon} />
+                </Link>
                 <Icon className={styles.editIcon} icon="material-symbols:edit" onClick={openModal} />
             </div>
             <Modal
@@ -75,10 +82,10 @@ const MovieCard = ({ movie }: MovieType) => {
                 onRequestClose={closeModal}
                 style={customStyles}
                 contentLabel="Movie Update Modal"
-                appElement={document.getElementById('root')!}
             >
                 <div className={styles.modalTitleContainer}>
                     <h2 className={styles.modalTitle}>Update Movie</h2>
+                    <GiCrossMark className={styles.closeIcon} onClick={closeModal} />
                 </div>
                 <UpdateMovieForm
                     movieId={movie.id}

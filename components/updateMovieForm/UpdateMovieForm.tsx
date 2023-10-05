@@ -6,6 +6,8 @@ import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import Image from 'next/image';
 import toast, { Toaster } from "react-hot-toast";
 import { GiBurningSkull } from "react-icons/gi";
+import { deleteMovie, updateMovieById } from "@/services/movies.services";
+import { useRouter } from "next/navigation";
 
 type MovieFormData = {
     image: File | null;
@@ -16,6 +18,8 @@ type MovieFormData = {
 };
 
 const UpdateMovieForm = ({ ...props }) => {
+
+    const router = useRouter();
 
     const defaultValues: MovieFormData = {
         image: null,
@@ -41,23 +45,31 @@ const UpdateMovieForm = ({ ...props }) => {
     const submitForm: SubmitHandler<MovieFormData> = async (data) => {
         let loadingToast: string | null = null;
         try {
-            // Muestra una notificación de carga cuando se inicia la carga de la película
-            loadingToast = toast.loading('Movie is being uploaded...');
 
-            // Simula una carga para demostrar la notificación
-            await new Promise((resolve) => setTimeout(resolve, 2000));
 
-            // Aquí puedes hacer la solicitud real para subir la película
-            // Reemplaza el código simulado con tu lógica de envío real
+            loadingToast = toast.loading('Movie is being updated...');
 
-            // Muestra una notificación de éxito cuando la película se ha subido correctamente
-            toast.success('Movie uploaded successfully!!', { id: loadingToast });
+            if (data.image) {
+                const formData = new FormData();
+                formData.append("title", data.title);
+                formData.append("year", data.year);
+                formData.append("score", data.score);
+                formData.append("genre", data.genre);
+                formData.append("image", data.image);
+
+                const updatedMovie = await updateMovieById(props.movieId, formData)
+
+            }
+
+            toast.success('Movie updated successfully!!', { id: loadingToast });
+            router.refresh();
             reset();
+            props.closeModal();
+
         } catch (error) {
-            // Maneja los errores aquí y muestra una notificación de error si es necesario
-            // error es la excepción capturada durante el proceso de envío
+
             if (loadingToast) {
-                toast.error('Error uploading movie', { id: loadingToast });
+                toast.error('Error updating movie', { id: loadingToast });
             }
         }
     };
@@ -73,7 +85,8 @@ const UpdateMovieForm = ({ ...props }) => {
     }, [reset]);
 
     const handleDeleteMovie = () => {
-        // deleteMovie(props.movieId, getAccessTokenSilently)
+        deleteMovie(props.movieId)
+        router.refresh();
         props.closeModal();
         // location.reload();
 

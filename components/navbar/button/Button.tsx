@@ -2,10 +2,12 @@
 
 import styles from "./button.module.css";
 import Link from "next/link";
-import { BiHomeAlt2, BiSearch, BiSolidHeart } from 'react-icons/bi';
+import { BiHomeAlt2 } from 'react-icons/bi';
 import { MdLibraryAdd } from 'react-icons/md';
 import { GiMonsterGrasp, Gi3DGlasses } from "react-icons/gi";
+import { LuLogOut } from "react-icons/lu";
 import { usePathname } from "next/navigation";
+
 // import { Icon } from '@iconify/react';
 
 
@@ -38,12 +40,12 @@ const Button = ({ path, index }: Props) => {
             }
             {index === 3 &&
                 <Link href={path}>
-                    <BiSolidHeart className={`${styles.icon} ${pathname === path ? styles.checked : ""}`} />
+                    <GiMonsterGrasp className={`${styles.icon} ${pathname === path ? styles.checked : ""}`} />
                 </Link>
             }
             {index === 4 &&
                 <Link href={path}>
-                    <GiMonsterGrasp className={`${styles.icon} ${pathname === path ? styles.checked : ""}`} />
+                    <LuLogOut className={`${styles.icon} ${pathname === path ? styles.checked : ""}`} />
                 </Link>
             }
 

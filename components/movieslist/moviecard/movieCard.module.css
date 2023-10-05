@@ -37,7 +37,9 @@
 .editContainer {
     height: 100%;
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .editIcon {
@@ -48,11 +50,18 @@
 
 .modalTitleContainer {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    padding: 0 20px;
 }
 
 .modalTitle {
     margin-top: 10px;
     margin-bottom: 20px;
+}
+
+.closeIcon {
+    height: 45px;
+    width: 45px;
+    color: red;
 }

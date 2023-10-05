@@ -1,14 +1,17 @@
-
+import Header from "../header/Header";
+import styles from "./login.module.css";
 
 type Props = {}
 
 const Login = (props: Props) => {
     return (
         <div>
-            <h1>Login</h1>
-            <a href="/api/auth/login">Login</a>
+            <Header />
+            <a href="/api/auth/login">
+                <button className={styles.button}>Log In</button>
+            </a>
         </div>
     )
 }
 
-export default Login
+export default Login;

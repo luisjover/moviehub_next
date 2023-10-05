@@ -7,3 +7,9 @@ export interface UserType {
     profilePicture: string,
     movies: Movie[]
 };
+
+export interface UserData {
+    name: string,
+    email: string,
+    profilePicture: string
+};

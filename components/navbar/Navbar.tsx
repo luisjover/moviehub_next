@@ -1,7 +1,7 @@
 import Button from "./button/Button";
 import styles from "./navbar.module.css";
 
-const navbarPaths = ["/", "/search", "/addmovie", "/favourites", "/profile"]
+const navbarPaths = ["/", "/favourites", "/addmovie", "/profile", "/api/auth/logout"]
 
 type Props = {}
 
