@@ -1,7 +1,7 @@
 # Devify Spotify Reinvented 🎧
 
 
-<img width="1600"  alt="Devify" src="https://user-images.githubusercontent.com/43146182/192656200-00bd8ed6-9bce-40d0-bb28-a9b2aef93cf3.png">
+<img width="1600"  alt="Devify" src="./public/assets/images/readmeImage.png">
 
 
 
