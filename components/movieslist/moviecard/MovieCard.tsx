@@ -2,7 +2,7 @@
 
 import styles from "./movieCard.module.css";
 import Image from 'next/image';
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Icon } from '@iconify/react';
 import Modal from 'react-modal';
 import { Movie } from "@/types/movies";
@@ -27,6 +27,13 @@ type MovieType = {
     movie: Movie
 }
 
+function setAppElement() {
+    if (typeof document !== 'undefined') {
+
+        Modal.setAppElement('#body-next');
+    }
+}
+
 const MovieCard = ({ movie }: MovieType) => {
 
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -39,6 +46,11 @@ const MovieCard = ({ movie }: MovieType) => {
     function closeModal() {
         setIsOpen(false);
     }
+
+    useEffect(() => {
+        // Configura el elemento raíz la primera vez que se monta el componente
+        setAppElement();
+    }, []);
 
 
     return (

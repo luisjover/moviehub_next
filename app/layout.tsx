@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body >
+      <body id='body-next'>
         <UserProvider>
           <AuthProvider>
             <Header />
