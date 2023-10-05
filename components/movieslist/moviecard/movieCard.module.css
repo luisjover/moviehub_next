@@ -46,12 +46,13 @@
     color: #FFFCFC;
 }
 
-/* .modal-title-container {
+.modalTitleContainer {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.modal-title {
+.modalTitle {
     margin-top: 10px;
-} */
+    margin-bottom: 20px;
+}

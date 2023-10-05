@@ -51,6 +51,7 @@ const MovieForm: FC = () => {
 
             // Muestra una notificación de éxito cuando la película se ha subido correctamente
             toast.success('Movie uploaded successfully!!', { id: loadingToast });
+            reset();
         } catch (error) {
             // Maneja los errores aquí y muestra una notificación de error si es necesario
             // error es la excepción capturada durante el proceso de envío
@@ -130,7 +131,7 @@ const MovieForm: FC = () => {
                         name="title"
                         control={control}
                         rules={{ required: 'Title is required' }}
-                        render={({ field }) => <input className={`${styles.titleInput} ${styles.input}`} {...field} type="text" />}
+                        render={({ field }) => <input className={`${styles.titleInput} ${styles.input}`} {...field} type="text" placeholder="Movie title..." />}
                     />
                     {errors.title && <p className={styles.error}>{errors.title.message}</p>}
                 </div>
@@ -141,7 +142,7 @@ const MovieForm: FC = () => {
                         name="year"
                         control={control}
                         rules={{ required: 'Year is required' }}
-                        render={({ field }) => <input className={`${styles.yearInput} ${styles.input}`} {...field} type="text" />}
+                        render={({ field }) => <input className={`${styles.yearInput} ${styles.input}`} {...field} type="text" placeholder="Year of publication..." />}
                     />
                     {errors.year && <p className={styles.error}>{errors.year.message}</p>}
                 </div>
@@ -152,7 +153,7 @@ const MovieForm: FC = () => {
                         name="score"
                         control={control}
                         rules={{ required: 'Score is required' }}
-                        render={({ field }) => <input className={`${styles.scoreInput} ${styles.input}`} {...field} type="text" />}
+                        render={({ field }) => <input className={`${styles.scoreInput} ${styles.input}`} {...field} type="text" placeholder="Movie score..." />}
                     />
                     {errors.score && <p className={styles.error}>{errors.score.message}</p>}
                 </div>

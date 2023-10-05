@@ -65,8 +65,8 @@ const MovieCard = ({ movie }: MovieType) => {
                 contentLabel="Movie Update Modal"
                 appElement={document.getElementById('root')!}
             >
-                <div className="modal-title-container">
-                    <h2 className="modal-title">Update Movie</h2>
+                <div className={styles.modalTitleContainer}>
+                    <h2 className={styles.modalTitle}>Update Movie</h2>
                 </div>
                 <UpdateMovieForm
                     movieId={movie.id}

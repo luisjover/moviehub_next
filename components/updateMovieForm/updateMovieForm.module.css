@@ -30,8 +30,8 @@
     align-items: center;
     color: #FFFFFF;
     border: 1px solid #AC090F;
-    width: 125px;
-    height: 60px;
+    width: 143px;
+    height: 78px;
     padding: 8px;
     border-radius: 8px;
     -webkit-border-radius: 8px;
@@ -41,8 +41,8 @@
 }
 
 .imagePreviewContainer {
-    width: 100px;
-    height: 160px;
+    width: 102px;
+    height: 162px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,8 +80,8 @@
 .yearInput,
 .scoreInput,
 .genreSelect {
-    width: 305px;
-    height: 55px;
+    width: 324px;
+    height: 59px;
     padding-left: 15px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     color: #FFFFFF;
@@ -161,11 +161,6 @@
     padding-bottom: 20px;
 }
 
-.deleteIcon {
-    height: 40px;
-    width: 40px;
-    color: white;
-}
 
 
 /* ----------TOGGLE-BUTTON----------*/
@@ -238,4 +233,11 @@ input:checked+.slider:before {
 
 .slider:before {
     border-radius: 50%;
+}
+
+
+.deleteIcon {
+    height: 40px;
+    width: 40px;
+    color: white;
 }

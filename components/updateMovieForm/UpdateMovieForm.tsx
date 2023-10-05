@@ -1,48 +1,76 @@
 "use client";
 
 import styles from "./updateMovieForm.module.css";
-import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
-import Image from "next/image";
-import PreviewBg from "@/public/assets/images/img-preview-bg.jpg";
+import { useState, useEffect, FC } from 'react';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
+import Image from 'next/image';
 import toast, { Toaster } from "react-hot-toast";
-// import { deleteMovie, updateMovieById } from "../../api/fetchApi";
-import { Icon } from '@iconify/react';
+import { GiBurningSkull } from "react-icons/gi";
 
+type MovieFormData = {
+    image: File | null;
+    title: string;
+    year: string;
+    score: string;
+    genre: string;
+};
 
 const UpdateMovieForm = ({ ...props }) => {
 
+    const defaultValues: MovieFormData = {
+        image: null,
+        title: '',
+        year: '',
+        score: '',
+        genre: '',
+    };
 
-    const [uploadingImageUrl, setUploadingImageUrl] = useState<any | null>(null);
-    const [seenState, setSeenState] = useState(false);
 
+    const {
+        handleSubmit,
+        control,
+        formState: { errors },
+        reset
+    } = useForm<MovieFormData>({ defaultValues });
+    const [isSeen, setIsSeen] = useState(false);
 
+    const toggleSeen = () => {
+        setIsSeen(!isSeen);
+    };
 
-    const { register, handleSubmit, formState: { errors }, reset, watch } = useForm({
-        defaultValues: {
-            image: null,
-            title: "",
-            year: "",
-            score: "",
-            genre: ""
+    const submitForm: SubmitHandler<MovieFormData> = async (data) => {
+        let loadingToast: string | null = null;
+        try {
+            // Muestra una notificación de carga cuando se inicia la carga de la película
+            loadingToast = toast.loading('Movie is being uploaded...');
+
+            // Simula una carga para demostrar la notificación
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+
+            // Aquí puedes hacer la solicitud real para subir la película
+            // Reemplaza el código simulado con tu lógica de envío real
+
+            // Muestra una notificación de éxito cuando la película se ha subido correctamente
+            toast.success('Movie uploaded successfully!!', { id: loadingToast });
+            reset();
+        } catch (error) {
+            // Maneja los errores aquí y muestra una notificación de error si es necesario
+            // error es la excepción capturada durante el proceso de envío
+            if (loadingToast) {
+                toast.error('Error uploading movie', { id: loadingToast });
+            }
         }
-    })
+    };
 
-
-    const submitForm = async (data: any) => {
-
-        // const userId = currentUser?.id;
-        toast.success('Movie is being uploaded...')
-
-        // if (userId)
-        // await updateMovieById(props.movieId, data, getAccessTokenSilently);
-
-        reset();
-        toast.success('Movie uploaded successfully...')
-        setUploadingImageUrl(null);
-        props.closeModal();
-        // location.reload();
-    }
+    useEffect(() => {
+        reset({
+            image: null,
+            title: '',
+            year: '',
+            score: '',
+            genre: '',
+        });
+    }, [reset]);
 
     const handleDeleteMovie = () => {
         // deleteMovie(props.movieId, getAccessTokenSilently)
@@ -52,23 +80,7 @@ const UpdateMovieForm = ({ ...props }) => {
     }
 
 
-    const handleSeenState = () => {
-        setSeenState(!seenState)
-    }
 
-    const uploadedImage = watch("image");
-
-    useEffect(() => {
-        if (uploadedImage) {
-            const selectedFile = uploadedImage[0]
-            const reader = new FileReader();
-            reader.onload = () => {
-                setUploadingImageUrl(reader.result as string);
-            };
-            reader.readAsDataURL(selectedFile);
-        }
-
-    }, [uploadedImage])
 
 
     return (
@@ -80,135 +92,126 @@ const UpdateMovieForm = ({ ...props }) => {
                     position="top-center"
                     reverseOrder={false}
                 />
-
                 <div className={styles.imageSelectionContainer}>
-                    <div className={styles.imageSelectorContainer}>
-                        <label htmlFor="movie-img-input">Select image</label>
-                        <input id="movie-img-input" className={`${styles.input} ${styles.hidden}`} type="file" accept="image/jpeg, image/jpg, image/webp" placeholder="Select movie cover..."
-                            {...register("image", {
-                                required: {
-                                    value: true,
-                                    message: "Image is required"
-                                }
-                            })}
-                        />
-                        {errors.image && <p className={styles.error}>{errors.image.message}</p>}
-                    </div>
-                    <div className={styles.ImagePreviewContainer} style={uploadingImageUrl ? { border: "none" } : {}}>
-                        {uploadingImageUrl ? <Image className={styles.selectedImage} src={uploadingImageUrl} alt="your movie cover" /> : <Image className={styles.selectedImage} src={PreviewBg} alt="upload your image" />}
-                    </div>
+                    <Controller
+                        name="image"
+                        control={control}
+                        render={({ field }) => (
+                            <>
+                                <div className={styles.imageSelectorContainer}>
+                                    <label htmlFor="image-input">Select Image</label>
+                                    <input
+                                        id="image-input"
+                                        type="file"
+                                        className={`${styles.input} ${styles.hidden}`}
+                                        accept="image/*"
+                                        onChange={(e) => {
+                                            const selectedFile = e.target.files?.[0];
+                                            if (selectedFile) {
+                                                field.onChange(selectedFile);
+                                            }
+                                        }}
+                                    />
+                                </div>
+                                <div className={styles.imagePreviewContainer} style={field.value ? { border: "none" } : {}}>
+                                    {field.value ? (
+                                        <Image
+                                            className={styles.selectedImage}
+                                            src={URL.createObjectURL(field.value)}
+                                            alt="Preview"
+                                            width={100}
+                                            height={100}
+                                        />
+                                    ) : (
+                                        <Image
+                                            className={styles.selectedImage}
+                                            src="/assets/images/img-preview-bg.jpg"
+                                            alt="Default"
+                                            width={100}
+                                            height={100}
+                                            priority={true}
+                                        />
+                                    )}
+                                </div>
+                            </>
+                        )}
+                    />
                 </div>
 
+
                 <div className={styles.inputContainer}>
-                    <input className={`${styles.titleInput} ${styles.input}`} type="text" placeholder="Movie title..."
-                        {...register("title", {
-                            required: {
-                                value: true,
-                                message: "movie title is required"
-                            },
-                            minLength: {
-                                value: 4,
-                                message: "Use 4 or more characters"
-                            },
-                            maxLength: {
-                                value: 20,
-                                message: "Use less than 20 characters"
-                            }
-                        })}
+
+                    <Controller
+                        name="title"
+                        control={control}
+                        rules={{ required: 'Title is required' }}
+                        render={({ field }) => <input className={`${styles.titleInput} ${styles.input}`} {...field} type="text" placeholder="Movie title..." />}
                     />
                     {errors.title && <p className={styles.error}>{errors.title.message}</p>}
                 </div>
 
-
-
-
                 <div className={styles.inputContainer}>
-                    <input className={`${styles.yearInput} ${styles.input}`} type="number" placeholder="Year of publication..."
-                        {...register("year", {
-                            required: {
-                                value: true,
-                                message: "Year is required"
-                            },
-                            min: {
-                                value: 1895,
-                                message: "Use a valid year"
-                            },
-                            max: {
-                                value: 2023,
-                                message: "Use a valid year"
-                            }
-                        })}
+
+                    <Controller
+                        name="year"
+                        control={control}
+                        rules={{ required: 'Year is required' }}
+                        render={({ field }) => <input className={`${styles.yearInput} ${styles.input}`} {...field} type="text" placeholder="Year of publication..." />}
                     />
                     {errors.year && <p className={styles.error}>{errors.year.message}</p>}
                 </div>
 
-
-
                 <div className={styles.inputContainer}>
-                    <input className={`${styles.scoreInput} ${styles.input}`} type="number" step="0.1" placeholder="Movie score..."
-                        {...register("score", {
-                            required: {
-                                value: true,
-                                message: "Movie score is required"
-                            },
-                            min: {
-                                value: 0,
-                                message: "Use a value between 1 and 10"
-                            },
-                            max: {
-                                value: 10,
-                                message: "Use a value between 1 and 10"
-                            }
-                        })}
+
+                    <Controller
+                        name="score"
+                        control={control}
+                        rules={{ required: 'Score is required' }}
+                        render={({ field }) => <input className={`${styles.scoreInput} ${styles.input}`} {...field} type="text" placeholder="Movie score..." />}
                     />
-                    {errors.title && <p className={styles.error}>{errors.title.message}</p>}
+                    {errors.score && <p className={styles.error}>{errors.score.message}</p>}
                 </div>
-
-
-
-
-
 
                 <div className={styles.inputContainer}>
-                    <select className={`${styles.genreSelect} ${styles.input}`} id="genres"
-                        defaultValue=""
-                        {...register("genre", {
-                            required: {
-                                value: true,
-                                message: "Genre selection is required"
-                            }
-                        })}
-                    >
-                        <option value="" disabled hidden>Select a genre for your movie</option>
-                        <option value="horror">Horror</option>
-                        <option value="sci-fi">Sci-Fi</option>
-                        <option value="fantasy">Fantasy</option>
-                        <option value="animation">Animation</option>
-                        <option value="thriller">Thriller</option>
-                        <option value="action">Action</option>
-                        <option value="comedy">Comedy</option>
-                        <option value="mistery">Mistery</option>
-                        <option value="adventure">Adventure</option>
-                        <option value="crime">Crime</option>
-                    </select>
-                    {errors.genre && <p className={styles.error}>{errors.genre.message}</p>}
+
+                    <Controller
+                        name="genre"
+                        control={control}
+                        render={({ field }) => (
+                            <select className={`${styles.genreSelect} ${styles.input}`} {...field}>
+                                <option value="" disabled hidden>Select a genre for your movie</option>
+                                <option value="horror">Horror</option>
+                                <option value="sci-fi">Sci-Fi</option>
+                                <option value="fantasy">Fantasy</option>
+                                <option value="animation">Animation</option>
+                                <option value="thriller">Thriller</option>
+                                <option value="action">Action</option>
+                                <option value="comedy">Comedy</option>
+                                <option value="mistery">Mistery</option>
+                                <option value="adventure">Adventure</option>
+                                <option value="crime">Crime</option>
+                            </select>
+                        )}
+                    />
                 </div>
+
 
                 <div className={styles.privacityContainer}>
                     <p className={styles.privacityText}>Seen/Unseen</p>
                     <span className={styles.privacityButtonContainer}>
-                        <p className={styles.privacityText}>{seenState ? "Seen" : "Unseen"}</p>
+                        <p className={styles.privacityText}>{isSeen ? "Seen" : "Unseen"}</p>
                         <label className={styles.switch}>
-                            <input type="checkbox" id="movie-privacity-check" onChange={handleSeenState} />
+                            <input type="checkbox" id="movie-privacity-check" onChange={toggleSeen} />
                             <span className={styles.slider}></span>
                         </label>
                     </span>
                 </div>
 
                 <button className={styles.submitButton} type="submit">Upload</button>
+
             </form>
             <div className={styles.whiteSpace}>
-                <Icon className={styles.deleteIcon} icon="icomoon-free:bin" onClick={handleDeleteMovie} />
+                <GiBurningSkull className={styles.deleteIcon} onClick={handleDeleteMovie} />
 
             </div>
 
@@ -218,23 +221,3 @@ const UpdateMovieForm = ({ ...props }) => {
 }
 
 export default UpdateMovieForm;
-
-
-
-
-
-
-
-
-
-const handleDeleteMovie = () => {
-    // deleteMovie(props.movieId, getAccessTokenSilently)
-    props.closeModal();
-    // location.reload();
-
-}
-
-<div className={styles.whiteSpace}>
-    <Icon className={styles.deleteIcon} icon="icomoon-free:bin" onClick={handleDeleteMovie} />
-
-</div>
