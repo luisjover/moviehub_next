@@ -120,7 +120,7 @@ const UpdateMovieForm = ({ ...props }) => {
                                             src={URL.createObjectURL(field.value)}
                                             alt="Preview"
                                             width={100}
-                                            height={100}
+                                            height={160}
                                         />
                                     ) : (
                                         <Image
@@ -128,7 +128,7 @@ const UpdateMovieForm = ({ ...props }) => {
                                             src="/assets/images/img-preview-bg.jpg"
                                             alt="Default"
                                             width={100}
-                                            height={100}
+                                            height={160}
                                             priority={true}
                                         />
                                     )}
