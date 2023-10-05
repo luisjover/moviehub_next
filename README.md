@@ -1,4 +1,4 @@
-# Devify Spotify Reinvented 🎧
+# Movie Hub Mobile Version 🍿
 
 
 <img width="1600"  alt="Devify" src="./public/assets/images/readmeImage.png">
@@ -13,36 +13,42 @@
 
 ## About
 
-This application is a redesigned imitation of Spotify, using its API we can see the latest releases, see the songs in the albums. We can search for both albums and artists through the search page and view the artist information. It is somewhat limited now but in the future it will have more features.
+This application is a light movie hub to save and track your most loved movies.
 
 
 ## Technologies
 - NextJs
-- Material-UI
+- React-icons
+- React-hook-form
+- Node.js
+- Express.js
+- PostgreSQL
+- Prisma
+- Cloudinary
+- Auth0
+
 
 ## Setup
 ```
-git clone git@github.com:alejandroaperez1994g/reimagined-spotify.git
+git clone https://github.com/luisjover/moviehub_next
+
+git clone https://github.com/luisjover/movie-hub
 ```
 
 ```
-cd reimagined-spotify/
+cd server
 ```
 
 ```
-yarn install
+npm install
 ```
-- Create a developer account at https://developer.spotify.com/
-- Get the client id and client secret provided when registering an app at https://developer.spotify.com/dashboard/applications
-- Create a env file 
-
-```
-touch env.development.local
-```
+- Create an account at Auth0 and Cloudinary
+- Get the credentials as you can see in the .env.example files
+- Create your own .env file 
 - Get referenced by the provided .env.example file
 
 ```
-yarn dev
+npm run dev in both repos
 ```
 
-## Happy Hacking! 🎧
+## Enjoy the power of CINEMA! 🍿
