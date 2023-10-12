@@ -1,7 +1,7 @@
 # Movie Hub Mobile Version 🍿
 
 
-<img width="600"  alt="Devify" src="./public/assets/images/readmeImage.png">
+<img width="600"  alt="MovieHub" src="./public/assets/images/readmeImage.png">
 
 
 
